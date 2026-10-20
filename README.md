@@ -12,6 +12,15 @@ Portfolio personnel d'un étudiant en Techniques de l'informatique (Cégep Saint
 - **Contact** : formulaire qui prépare un courriel dans l'application de messagerie.
 - **CV** : version PDF téléchargeable (`cv/cv_kouame.pdf`).
 
+## Assistant IA
+
+Un widget « Pose-moi une question » (`js/chat.js`) répond aux questions des visiteurs sur mon parcours, mes compétences et mes projets. Il appelle la fonction Netlify `netlify/functions/chat.mjs` (route `/api/chat`), qui interroge l'API Gemini de Google (palier gratuit). La clé reste côté serveur.
+
+- Base de connaissances et consignes : `netlify/functions/knowledge.mjs` (à garder synchronisée avec `about.html` et `projects.html`).
+- Garde-fous : limite de débit par IP, historique et taille des messages plafonnés, réponses limitées aux faits fournis.
+- Configuration : définir la variable d'environnement `GEMINI_API_KEY` dans Netlify (Site configuration > Environment variables). Variable facultative `GEMINI_MODEL` pour changer de modèle.
+- Test en local : `npx netlify dev` (avec la clé dans un fichier `.env` non versionné).
+
 ## Technologies
 
 Site statique en HTML, CSS et JavaScript, sans framework ni étape de build.

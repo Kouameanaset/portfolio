@@ -65,7 +65,9 @@ export default async (request, context) => {
       return json(502, { error: "L'assistant est indisponible pour le moment." });
     }
     const data = await upstream.json();
-    const reply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim();
+    // Filet de sécurité : le widget affiche du texte brut, on retire les marques markdown résiduelles.
+    const reply = (data.candidates?.[0]?.content?.parts || []).map(p => p.text || '').join('').trim()
+      .replace(/\*\*(.+?)\*\*/g, '$1').replace(/^\s*[*-]\s+/gm, '').replace(/^#+\s*/gm, '');
     return json(200, { reply: reply || "Je n'ai pas de réponse pour cette question." });
   } catch (error) {
     console.error('Erreur réseau', error);

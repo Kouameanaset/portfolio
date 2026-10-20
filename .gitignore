@@ -1,1 +1,4 @@
-preview.cjs 
+preview.cjs
+.env
+.netlify
+node_modules
